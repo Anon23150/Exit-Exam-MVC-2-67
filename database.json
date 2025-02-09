@@ -8,6 +8,14 @@
         "healthCheck": "02/01/2025",
         "vaccineCount": 1,
         "fireProofCert": true
+      },
+      {
+        "petId": "72643308",
+        "foodId": "82710232",
+        "type": "phoenix",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "fireProofCert": true
       }
     ],
     "dragon": [
@@ -88,6 +96,14 @@
         "healthCheck": "02/01/20255",
         "vaccineCount": 1,
         "fireProofCert": true
+      },
+      {
+        "petId": "43813707",
+        "foodId": "91922697",
+        "type": "phoenix",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "fireProofCert": false
       }
     ],
     "dragon": [

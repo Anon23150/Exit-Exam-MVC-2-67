@@ -218,44 +218,37 @@ const petController = {
     const vaccineInt = parseInt(vaccineCount, 10);
     const flightFloat = parseFloat(flightDistance);
 
-    // ตรวจสอบว่า vaccineCount เป็นจำนวนเต็มบวก (ต้องมากกว่า 0)
+    let isAccepted = true;
+    let errorMessage = "";
+
+    // 📌 ตรวจสอบรูปแบบและความถูกต้องของ `healthCheck`
+    if (!moment(healthCheck, "DD/MM/YYYY", true).isValid()) {
+      isAccepted = false;
+      errorMessage = "Invalid health check date format. Use DD/MM/YYYY.";
+    } else {
+      const healthDate = moment(healthCheck, "DD/MM/YYYY");
+      const today = moment();
+
+      if (healthDate.isAfter(today)) {
+        isAccepted = false;
+        errorMessage = "Health check date cannot be in the future.";
+      }
+    }
+
+    // 📌 ตรวจสอบค่า vaccineCount
     if (isNaN(vaccineInt) || vaccineInt < 1) {
-      const rejectedOwl = {
-        petId: PetModel.generateId(),
-        foodId: PetModel.generateId(),
-        type: "owl",
-        healthCheck,
-        vaccineCount: vaccineInt,
-        flightDistance: flightFloat,
-      };
-      PetModel.addPet("owl", rejectedOwl, false); // บันทึก rejected
-      return res.redirect(
-        `/owl?error=${encodeURIComponent(
-          "❌ Invalid vaccine count. It must be a positive integer."
-        )}`
-      );
+      isAccepted = false;
+      errorMessage = "Invalid vaccine count. It must be a positive integer.";
     }
 
-    // ตรวจสอบว่า flightDistance ≥ 100 km เท่านั้น
+    // 📌 ตรวจสอบค่า flightDistance (ต้องมากกว่า 100 km)
     if (isNaN(flightFloat) || flightFloat < 100) {
-      const rejectedOwl = {
-        petId: PetModel.generateId(),
-        foodId: PetModel.generateId(),
-        type: "owl",
-        healthCheck,
-        vaccineCount: vaccineInt,
-        flightDistance: flightFloat,
-      };
-      PetModel.addPet("owl", rejectedOwl, false); // บันทึก rejected
-      return res.redirect(
-        `/owl?error=${encodeURIComponent(
-          "❌ Owl flight distance must be at least 100 km."
-        )}`
-      );
+      isAccepted = false;
+      errorMessage = "Owl flight distance must be at least 100 km.";
     }
 
-    // ✅ บันทึก Owl ที่ถูกต้องลง accepted
-    const newOwl = {
+    // ✅ สร้างข้อมูล Owl
+    const owlData = {
       petId: PetModel.generateId(),
       foodId: PetModel.generateId(),
       type: "owl",
@@ -264,20 +257,19 @@ const petController = {
       flightDistance: flightFloat,
     };
 
-    const isAdded = PetModel.addPet("owl", newOwl, true); // ✅ บันทึก accepted
+    // 📝 บันทึกใน database.json
+    PetModel.addPet("owl", owlData, isAccepted);
 
-    if (isAdded) {
-      return res.redirect(
-        `/owl?success=${encodeURIComponent(
-          "✅ Owl has been successfully registered!"
-        )}`
-      );
-    } else {
-      return res.redirect(
-        `/owl?error=${encodeURIComponent("❌ Failed to register Owl.")}`
-      );
-    }
+    // 🔄 ส่งผลลัพธ์ไปยังหน้า View
+    return res.redirect(
+      `/owl?${isAccepted ? "success" : "error"}=${encodeURIComponent(
+        isAccepted
+          ? "✅ Owl has been successfully registered!"
+          : errorMessage
+      )}`
+    );
   },
+
 };
 
 module.exports = petController;
