@@ -31,10 +31,18 @@ const petController = {
         return res.status(500).send("Error loading phoenix.html");
       }
 
-      const errorMessage = req.query.error ? `<p style="color:red;">${req.query.error}</p>` : "";
-      const successMessage = req.query.success ? `<p style="color:green;">${req.query.success}</p>` : "";
+      const errorMessage = req.query.error
+        ? `<p style="color:red;">${req.query.error}</p>`
+        : "";
+      const successMessage = req.query.success
+        ? `<p style="color:green;">${req.query.success}</p>`
+        : "";
 
-      res.send(html.replace("{{errorMessage}}", errorMessage).replace("{{successMessage}}", successMessage));
+      res.send(
+        html
+          .replace("{{errorMessage}}", errorMessage)
+          .replace("{{successMessage}}", successMessage)
+      );
     });
   },
 
@@ -103,14 +111,18 @@ const petController = {
         return res.status(500).send("Error loading dragon.html");
       }
 
-      const errorMessage = req.query.error ? `<p style="color:red;">${req.query.error}</p>` : "";
-      const successMessage = req.query.success ? `<p style="color:green;">${req.query.success}</p>` : "";
+      const errorMessage = req.query.error
+        ? `<p style="color:red;">${req.query.error}</p>`
+        : "";
+      const successMessage = req.query.success
+        ? `<p style="color:green;">${req.query.success}</p>`
+        : "";
 
       res.send(
-        html.replace(/{{errorMessage}}/g, errorMessage || "")
-            .replace(/{{successMessage}}/g, successMessage || "")
+        html
+          .replace(/{{errorMessage}}/g, errorMessage || "")
+          .replace(/{{successMessage}}/g, successMessage || "")
       );
-      
     });
   },
 
@@ -173,18 +185,29 @@ const petController = {
     );
   },
 
+
+
+
   getOwlForm: (req, res) => {
     const filePath = path.join(__dirname, "../views/owl.html");
 
     fs.readFile(filePath, "utf8", (err, html) => {
       if (err) {
-        return res.status(500).send("Error loading owl.html");
+        return res.status(500).send("Error loading dragon.html");
       }
 
-      const errorMessage = req.query.error ? `<p style="color:red;">${req.query.error}</p>` : "";
-      const successMessage = req.query.success ? `<p style="color:green;">${req.query.success}</p>` : "";
+      const errorMessage = req.query.error
+        ? `<p style="color:red;">${req.query.error}</p>`
+        : "";
+      const successMessage = req.query.success
+        ? `<p style="color:green;">${req.query.success}</p>`
+        : "";
 
-      res.send(html.replace("{{errorMessage}}", errorMessage).replace("{{successMessage}}", successMessage));
+      res.send(
+        html
+          .replace(/{{errorMessage}}/g, errorMessage || "")
+          .replace(/{{successMessage}}/g, successMessage || "")
+      );
     });
   },
 
@@ -195,37 +218,44 @@ const petController = {
     const vaccineInt = parseInt(vaccineCount, 10);
     const flightFloat = parseFloat(flightDistance);
 
-    let isAccepted = true;
-    let errorMessage = "";
-
-    // 📌 ตรวจสอบรูปแบบและความถูกต้องของ `healthCheck`
-    if (!moment(healthCheck, "DD/MM/YYYY", true).isValid()) {
-      isAccepted = false;
-      errorMessage = "Invalid health check date format. Use DD/MM/YYYY.";
-    } else {
-      const healthDate = moment(healthCheck, "DD/MM/YYYY");
-      const today = moment();
-
-      if (healthDate.isAfter(today)) {
-        isAccepted = false;
-        errorMessage = "Health check date cannot be in the future.";
-      }
-    }
-
-    // 📌 ตรวจสอบค่า vaccineCount
+    // ตรวจสอบว่า vaccineCount เป็นจำนวนเต็มบวก (ต้องมากกว่า 0)
     if (isNaN(vaccineInt) || vaccineInt < 1) {
-      isAccepted = false;
-      errorMessage = "Invalid vaccine count. It must be a positive integer.";
+      const rejectedOwl = {
+        petId: PetModel.generateId(),
+        foodId: PetModel.generateId(),
+        type: "owl",
+        healthCheck,
+        vaccineCount: vaccineInt,
+        flightDistance: flightFloat,
+      };
+      PetModel.addPet("owl", rejectedOwl, false); // บันทึก rejected
+      return res.redirect(
+        `/owl?error=${encodeURIComponent(
+          "❌ Invalid vaccine count. It must be a positive integer."
+        )}`
+      );
     }
 
-    // 📌 ตรวจสอบค่า flightDistance (ต้องไม่ต่ำกว่า 100 km)
+    // ตรวจสอบว่า flightDistance ≥ 100 km เท่านั้น
     if (isNaN(flightFloat) || flightFloat < 100) {
-      isAccepted = false;
-      errorMessage = "Owl flight distance must be at least 100 km.";
+      const rejectedOwl = {
+        petId: PetModel.generateId(),
+        foodId: PetModel.generateId(),
+        type: "owl",
+        healthCheck,
+        vaccineCount: vaccineInt,
+        flightDistance: flightFloat,
+      };
+      PetModel.addPet("owl", rejectedOwl, false); // บันทึก rejected
+      return res.redirect(
+        `/owl?error=${encodeURIComponent(
+          "❌ Owl flight distance must be at least 100 km."
+        )}`
+      );
     }
 
-    // ✅ สร้างข้อมูล Owl
-    const owlData = {
+    // ✅ บันทึก Owl ที่ถูกต้องลง accepted
+    const newOwl = {
       petId: PetModel.generateId(),
       foodId: PetModel.generateId(),
       type: "owl",
@@ -234,15 +264,19 @@ const petController = {
       flightDistance: flightFloat,
     };
 
-    // 📝 บันทึกใน database.json
-    PetModel.addPet("owl", owlData, isAccepted);
+    const isAdded = PetModel.addPet("owl", newOwl, true); // ✅ บันทึก accepted
 
-    // 🔄 ส่งผลลัพธ์ไปยังหน้า View
-    return res.redirect(
-      `/owl?${isAccepted ? "success" : "error"}=${encodeURIComponent(
-        isAccepted ? "✅ Owl has been successfully registered!" : errorMessage
-      )}`
-    );
+    if (isAdded) {
+      return res.redirect(
+        `/owl?success=${encodeURIComponent(
+          "✅ Owl has been successfully registered!"
+        )}`
+      );
+    } else {
+      return res.redirect(
+        `/owl?error=${encodeURIComponent("❌ Failed to register Owl.")}`
+      );
+    }
   },
 };
 

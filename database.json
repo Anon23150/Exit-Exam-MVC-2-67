@@ -18,12 +18,44 @@
         "healthCheck": "02/01/2025",
         "vaccineCount": 85,
         "pollutionLevel": 50
+      },
+      {
+        "petId": "20240933",
+        "foodId": "65682178",
+        "type": "dragon",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 85,
+        "pollutionLevel": 50
       }
     ],
     "owl": [
       {
         "petId": "45960589",
         "foodId": "79326228",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 100
+      },
+      {
+        "petId": "95971070",
+        "foodId": "34825784",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 100
+      },
+      {
+        "petId": "32479169",
+        "foodId": "54328960",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 100
+      },
+      {
+        "petId": "13318762",
+        "foodId": "27310325",
         "type": "owl",
         "healthCheck": "02/01/2025",
         "vaccineCount": 1,

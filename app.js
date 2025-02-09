@@ -9,13 +9,13 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// Routes (แสดงหน้า HTML)
+// Routes (ให้ Controller ส่งไฟล์ View)
 app.get('/', petController.getReportPage);
-app.get('/phoenix', (req, res) => res.sendFile(__dirname + '/views/phoenix.html'));
-app.get('/dragon', (req, res) => res.sendFile(__dirname + '/views/dragon.html'));
-app.get('/owl', (req, res) => res.sendFile(__dirname + '/views/owl.html'));
+app.get('/phoenix', petController.getPhoenixForm);
+app.get('/dragon', petController.getDragonForm);
+app.get('/owl', petController.getOwlForm);
 
-// Routes (บันทึกข้อมูลสัตว์)
+// Routes (ให้ Controller รับข้อมูลสัตว์เลี้ยง)
 app.post('/submit/phoenix', petController.addPhoenix);
 app.post('/submit/dragon', petController.addDragon);
 app.post('/submit/owl', petController.addOwl);
