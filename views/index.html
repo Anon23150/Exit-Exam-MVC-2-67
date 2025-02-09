@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Pet Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        .container {
+            background: white;
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul li a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        ul li a:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Magic Pet Management</h1>
+    
+    <div class="container">
+        <h2>Register a New Pet</h2>
+        <ul>
+            <li><a href="/phoenix">Register Phoenix</a></li>
+            <li><a href="/dragon">Register Dragon</a></li>
+            <li><a href="/owl">Register Owl</a></li>
+        </ul>
+
+        <h2>Summary Report</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pet Type</th>
+                    <th>Accepted</th>
+                    <th>Rejected</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Phoenix</td>
+                    <td>{{phoenix_accepted}}</td>
+                    <td>{{phoenix_rejected}}</td>
+                </tr>
+                <tr>
+                    <td>Dragon</td>
+                    <td>{{dragon_accepted}}</td>
+                    <td>{{dragon_rejected}}</td>
+                </tr>
+                <tr>
+                    <td>Owl</td>
+                    <td>{{owl_accepted}}</td>
+                    <td>{{owl_rejected}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,98 @@
+{
+  "accepted": {
+    "phoenix": [
+      {
+        "petId": "36168515",
+        "foodId": "22881525",
+        "type": "phoenix",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "fireProofCert": true
+      }
+    ],
+    "dragon": [
+      {
+        "petId": "28228539",
+        "foodId": "14695918",
+        "type": "dragon",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 85,
+        "pollutionLevel": 50
+      }
+    ],
+    "owl": [
+      {
+        "petId": "45960589",
+        "foodId": "79326228",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 100
+      }
+    ]
+  },
+  "rejected": {
+    "phoenix": [
+      {
+        "petId": "34578733",
+        "foodId": "20416748",
+        "type": "phoenix",
+        "healthCheck": "02/01/20255",
+        "vaccineCount": 1,
+        "fireProofCert": true
+      },
+      {
+        "petId": "63333416",
+        "foodId": "83421638",
+        "type": "phoenix",
+        "healthCheck": "02/01/20255",
+        "vaccineCount": 1,
+        "fireProofCert": true
+      },
+      {
+        "petId": "40614917",
+        "foodId": "54797675",
+        "type": "phoenix",
+        "healthCheck": "02/01/20255",
+        "vaccineCount": 1,
+        "fireProofCert": true
+      }
+    ],
+    "dragon": [
+      {
+        "petId": "27786471",
+        "foodId": "22242679",
+        "type": "dragon",
+        "healthCheck": "02/01//2025",
+        "vaccineCount": 85,
+        "pollutionLevel": 71
+      },
+      {
+        "petId": "93135276",
+        "foodId": "97797232",
+        "type": "dragon",
+        "healthCheck": "02/01//2025",
+        "vaccineCount": 85,
+        "pollutionLevel": 50
+      }
+    ],
+    "owl": [
+      {
+        "petId": "48972995",
+        "foodId": "87674354",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 10
+      },
+      {
+        "petId": "58701502",
+        "foodId": "71896682",
+        "type": "owl",
+        "healthCheck": "02/01/2025",
+        "vaccineCount": 1,
+        "flightDistance": 10
+      }
+    ]
+  }
+}
